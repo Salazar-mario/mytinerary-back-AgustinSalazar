@@ -2,4 +2,4 @@ const express = require ('express')
 const router = express.Router()
 
 
-router.get("", funcion)
+router.get("Cities", funcion)
