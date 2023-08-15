@@ -1,16 +1,22 @@
-import { Schema, model, Types } from "mongoose";
+const { Schema, model } = require('mongoose');
 
 const collection = "cities";
 
 const schema = new Schema({
-    city: {type:String, required:true},
-    country: {type:String, required:true},
-    image: {type:String, required:true},
-    created_by_user: {type:Types.ObjectId, ref:'users'},
-},{
-    timestamps: true,
-})
+    city: {
+        type: String,
+        required: true
+    },
+    country: {
+        type: String,
+        required: true
+    },
+    image: { // Cambiado de "url" a "image"
+        type: String,
+        required: true
+    }
+});
 
 const City = model(collection, schema);
 
-export default City;
+module.exports = City;
