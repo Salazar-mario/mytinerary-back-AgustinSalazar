@@ -1,14 +1,16 @@
-import { Schema,model} from "mongoose";
+import { Schema, model, Types } from "mongoose";
 
-let collection = 'cities';
+const collection = "cities";
 
-let schema =  new Schema({
-    city : {type:String, required:true},
-    country : {type:String, required:true},
-    url : {type:String, required:true},
+const schema = new Schema({
+    city: {type:String, required:true},
+    country: {type:String, required:true},
+    image: {type:String, required:true},
+    created_by_user: {type:Types.ObjectId, ref:'users'},
 },{
-    timestamps: true
+    timestamps: true,
 })
 
-const City = model (collection, schema);
+const City = model(collection, schema);
+
 export default City;

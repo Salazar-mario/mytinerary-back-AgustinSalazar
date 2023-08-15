@@ -1,12 +1,10 @@
-import express from 'express';
+const express = require("express");
+const {getCities, getCity, postCity} = require('../controllers/citiesController')
+
 const router = express.Router();
-import cities from './cities.js';
 
-router.get('/', (request, response) => {
-    console.log(request);
-    response.send('Hello World');
-});
+router.get("/cities", getCities);
+router.get("/city", getCity )
 
-router.use('/cities', cities);
 
-export default router;
+module.exports = router

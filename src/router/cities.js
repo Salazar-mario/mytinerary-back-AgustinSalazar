@@ -1,11 +1,10 @@
-import express from "express";
-import citiesController from "../controllers/citiesController";
+const express = require('express');
+const citiesController = require("../controllers/citiesController");
 
 const router = express.Router()
 
-router.get('/', citiesController.getCities);
+router.get('/cities', citiesController.getCities);
 
-router.post('/', citiesController.createCity);
+router.post('/city', citiesController.createCity);
 
 
-export default router;
