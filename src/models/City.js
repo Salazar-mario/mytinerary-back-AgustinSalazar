@@ -11,7 +11,7 @@ const schema = new Schema({
         type: String,
         required: true
     },
-    image: { // Cambiado de "url" a "image"
+    image: { 
         type: String,
         required: true
     }
