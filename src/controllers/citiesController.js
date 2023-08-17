@@ -81,7 +81,6 @@ const getCity = (req, res) => {
 };
 
 const postCity = (req, res) => {
-    // You can implement the logic for adding a new city here
 };
 
 module.exports = { getCities, getCity, postCity };
