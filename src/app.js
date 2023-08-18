@@ -2,12 +2,12 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const citiesRouter = require('./router/router.js');
-
+const citiesRouter = require('./router/router'); 
 const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use('/api', citiesRouter); 
 
 const port = process.env.PORT || 5000;
 
@@ -17,11 +17,8 @@ app.listen(port, () => {
 
 require('dotenv').config();
 
-const uri_link = process.env.MONGO; // Utiliza el nombre de variable correcto (MONGO en lugar de URI_DB)
+const uri = process.env.MONGO; 
 
-console.log('uri_link:', uri_link);
-mongoose.connect(uri_link)
+mongoose.connect(uri)
     .then(() => console.log('Database Connected'))
-    .catch(error => console.log(error));
-
-app.use('/cities', citiesRouter);
+    .catch(error => console.error('Error connecting to database:', error));

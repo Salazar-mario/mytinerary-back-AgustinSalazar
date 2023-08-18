@@ -1,23 +1,32 @@
-const City = require("../models/City");
-
-const genRes = {
-    response: [],
-    success: true,
-    error: null
-}
+const mongoose = require('mongoose');
+const City = require('../models/City');
 
 const citiesController = {
     getAllCities: async (req, res, next) => {
         try {
-            genRes.response = await City.find();
-            res.status(200).json(genRes);
+            const cities = await City.find();
+            res.status(200).json({ response: cities, success: true });
         } catch (err) {
             next(err);
         }
     },
     getCityById: async (req, res, next) => {
         try {
-            genRes.response = await City.findById(req.params.id);
+            const genRes = {
+                response: null,
+                success: true,
+                error: null
+            };
+
+            const id = req.params.id;
+
+            if (!mongoose.Types.ObjectId.isValid(id)) {
+                genRes.success = false;
+                genRes.error = 'Invalid ObjectId';
+                return res.status(400).json(genRes);
+            }
+
+            genRes.response = await City.findById(id);
             res.status(200).json(genRes);
         } catch (err) {
             next(err);
@@ -25,28 +34,27 @@ const citiesController = {
     },
     createManyCities: async (req, res, next) => {
         try {
-            genRes.response = await City.create(req.body);
-            res.status(201).json(genRes);
+            const createdCities = await City.create(req.body);
+            res.status(201).json({ response: createdCities, success: true });
         } catch (err) {
             next(err);
         }
     },
     updateCity: async (req, res, next) => {
         try {
-            genRes.response = await City.findByIdAndUpdate(req.params.id, req.body, { new: true });
-            res.status(200).json(genRes);
+            const updatedCity = await City.findByIdAndUpdate(req.params.id, req.body, { new: true });
+            res.status(200).json({ response: updatedCity, success: true });
         } catch (err) {
             next(err);
         }
     },
     deleteCity: async (req, res, next) => {
         try {
-            genRes.response = await City.findByIdAndDelete(req.params.id);
-            res.status(200).json(genRes);
+            const deletedCity = await City.findByIdAndDelete(req.params.id);
+            res.status(200).json({ response: deletedCity, success: true });
         } catch (err) {
             next(err);
         }
     }
-}
-
+};
 module.exports = citiesController;

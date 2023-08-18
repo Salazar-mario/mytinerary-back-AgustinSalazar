@@ -1,13 +1,12 @@
 const express = require('express');
-const citiesController = require("../controllers/citiesController");
+const citiesRouter = require("../router/cities");
 
-const cities = express.Router();
-const {getAllCities, getCityById, createManyCities, updateCity, deleteCity} = citiesController;
+const router = express.Router();
 
-cities.get('/', getAllCities);
-cities.get('/:id', getCityById);
-cities.post('/', createManyCities);
-cities.put('/:id', updateCity);
-cities.delete('/:id', deleteCity);
+router.get("/", (request, response) => {
+    console.log(request);
+    response.send("Hello World");
+});
+router.use('/cities', citiesRouter);
 
-module.exports = cities;
+module.exports = router;

@@ -1,8 +1,12 @@
-const { connect } = require("mongoose");
+/*const { connect } = require("mongoose");
 require('dotenv').config();
 
-let uri_link = process.env.MONGO
+const username = process.env.Agustin;
+const password = process.env.qQOs4SVM9fitqPVv;
+const dbName = process.env.project0;
 
-mongoose.connect(uri_link)
+const uri = `mongodb+srv://${username}:${password}@cluster0.ayuhxw2.mongodb.net/${dbName}?retryWrites=true&w=majority`;
+
+mongoose.connect(uri)
     .then(() => console.log('Database Connected'))
-    .catch(error => console.log(error))
+    .catch(error => console.log(error));*/
