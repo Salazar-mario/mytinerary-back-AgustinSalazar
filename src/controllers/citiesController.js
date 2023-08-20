@@ -1,15 +1,25 @@
 const mongoose = require('mongoose');
-const City = require('../models/City');
+const City = require('../models/city');
+
 
 const citiesController = {
-    getAllCities: async (req, res, next) => {
-        try {
-            const cities = await City.find();
-            res.status(200).json({ response: cities, success: true });
-        } catch (err) {
-            next(err);
-        }
-    },
+        getAllCities: async (req, res, next) => {
+            try {
+                let query = {};
+    
+                if (req.query.name) {
+                    query.city = new RegExp(req.query.name, 'i');
+                }
+                if (req.query.country) {
+                    query.country = new RegExp(req.query.country, 'i');
+                }
+    
+                const cities = await City.find(query);
+                res.status(200).json({ response: cities, success: true });
+            } catch (err) {
+                next(err);
+            }
+        },
     getCityById: async (req, res, next) => {
         try {
             const genRes = {
@@ -40,6 +50,7 @@ const citiesController = {
             next(err);
         }
     },
+    
     updateCity: async (req, res, next) => {
         try {
             const updatedCity = await City.findByIdAndUpdate(req.params.id, req.body, { new: true });
