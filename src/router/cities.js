@@ -9,7 +9,7 @@ const { verifyDataCity } = require('../middlewares/verifications');
 cities.get('/', getAllCities);
 cities.get('/:id', getCityById);
 cities.post('/', verifyDataCity,createManyCities);
-cities.put('/:id', verifyDataCity,updateCity);
+cities.patch('/:id', verifyDataCity,updateCity);
 cities.delete('/:id', deleteCity);
 
 module.exports = cities;
