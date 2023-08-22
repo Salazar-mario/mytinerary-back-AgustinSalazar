@@ -3,7 +3,7 @@ const cities = [
         "country": "France",
         "city": "Paris",
         "image": "https://p1.pxfuel.com/preview/51/123/716/louvre-pyramid-paris-architecture.jpg?w=500&h=400&s=1",
-        "coment": "Paris is the capital of France, famous for landmarks like the Eiffel Tower and Louvre Museum.",
+        "comment": "Paris is the capital of France, famous for landmarks like the Eiffel Tower and Louvre Museum.",
         "user": "64dac693d4f562a786ecd543"
     },
     {

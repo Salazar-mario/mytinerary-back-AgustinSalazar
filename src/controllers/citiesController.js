@@ -2,8 +2,7 @@ const mongoose = require('mongoose');
 const City = require('../models/city');
 
 
-const citiesController = {
-        getAllCities: async (req, res, next) => {
+const getAllCities = async (req, res, next) => {
             try {
                 let query = {};
     
@@ -19,8 +18,8 @@ const citiesController = {
             } catch (err) {
                 next(err);
             }
-        },
-    getCityById: async (req, res, next) => {
+        }
+    const getCityById = async (req, res, next) => {
         try {
             const genRes = {
                 response: null,
@@ -41,25 +40,33 @@ const citiesController = {
         } catch (err) {
             next(err);
         }
-    },
-    createManyCities: async (req, res, next) => {
+    }
+    const createManyCities = async (req, res, next) => {
         try {
             const createdCities = await City.create(req.body);
-            res.status(201).json({ response: createdCities, success: true });
+            res.status(201).json({
+                response: createdCities,
+                success: true,
+                message: 'Cities created successfully' 
+            });
         } catch (err) {
             next(err);
         }
-    },
+    }
     
-    updateCity: async (req, res, next) => {
+    const updateCity = async (req, res, next) => {
         try {
             const updatedCity = await City.findByIdAndUpdate(req.params.id, req.body, { new: true });
-            res.status(200).json({ response: updatedCity, success: true });
+            res.status(200).json({
+                response: updatedCity,
+                success: true,
+                message: 'City updated successfully' 
+            });
         } catch (err) {
             next(err);
         }
-    },
-    deleteCity: async (req, res, next) => {
+    }
+    const deleteCity = async (req, res, next) => {
         try {
             const deletedCity = await City.findByIdAndDelete(req.params.id);
             res.status(200).json({ response: deletedCity, success: true });
@@ -67,5 +74,11 @@ const citiesController = {
             next(err);
         }
     }
-};
-module.exports = citiesController;
+
+module.exports = {
+    getAllCities,
+    getCityById,
+    createManyCities,
+    updateCity,
+    deleteCity
+}
