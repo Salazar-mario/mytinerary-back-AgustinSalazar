@@ -1,4 +1,4 @@
-const City = require('../models/city');
+/*const City = require('../models/city');
 const citiesData = require('../cities');
 
 City.countDocuments({})

@@ -56,7 +56,16 @@ const getAllCities = async (req, res, next) => {
     
     const updateCity = async (req, res, next) => {
         try {
-            const updatedCity = await City.findByIdAndUpdate(req.params.id, req.body, { new: true });
+            const updatedCity = await City.findByIdAndUpdate(
+                req.params.id,
+                {
+                    country: req.body.country,
+                    image: req.body.image,
+                    comment: req.body.comment,
+                    city: req.body.city
+                },
+                { new: true }
+            );
             res.status(200).json({
                 response: updatedCity,
                 success: true,
@@ -66,6 +75,8 @@ const getAllCities = async (req, res, next) => {
             next(err);
         }
     }
+    
+    
     const deleteCity = async (req, res, next) => {
         try {
             const deletedCity = await City.findByIdAndDelete(req.params.id);

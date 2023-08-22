@@ -60,7 +60,7 @@ const cities = [
     {
         "country": "Japan",
         "city": "Tokyo",
-        "image": "https://p0.pxfuel.com/preview/509/49/270/tokyo-city-japan-crossroad.jpg?w=500&h=400&s=1",
+        "image": "https://www.jetstar.com/_/media/inspiration-hub/article-images/19nov/tokyo-ntk/hero_japan_tokyo.jpg?rev=564b3bba2d3f487d8ac9694d50bf8471&w=1050&rc=1&cw=1050&ch=590&cx=55&cy=0&hash=ACC044CB95548A52B3F9790DC146C1EE0A03EB9A",
         "comment": "Tokyo is the capital of Japan, mixing ultramodern and traditional with skyscrapers, temples and pop culture."
     },
     {
@@ -78,7 +78,7 @@ const cities = [
     {
         "country": "Colombia",
         "city": "Cartagena",
-        "image": "https://p1.pxfuel.com/preview/180/513/223/colombia-cartagena-holiday-beach.jpg?w=500&h=400&s=1",
+        "image": "https://lonelyplanetes.cdnstatics2.com/sites/default/files/styles/max_1300x1300/public/fotos/Colombia_CartagenadeIndias_shutterstock_171806537_Jess%20Kraft_Shutterstock.jpg?itok=lxXuGXBc",
         "comment": "Cartagena is a colonial Colombian Caribbean city with 16th century walls, palaces and convents."
     },
     {
