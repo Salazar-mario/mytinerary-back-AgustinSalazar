@@ -10,7 +10,7 @@ const uri = `mongodb+srv://${username}:${password}@cluster0.xz64zac.mongodb.net/
 mongoose.connect(uri)
     .then(() => {
         console.log('Database Connected');
-        require('./initData');
+
     })
     .catch(error => {
         console.error('Error connecting to the database:', error);

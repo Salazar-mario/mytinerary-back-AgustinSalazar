@@ -7,19 +7,19 @@ const verifyDataCity = (req, res, next) => {
         });
     }
 
-    if (country == "") {
+    if (country === "") {
         return res.status(400).json({
             message: 'Invalid country'
         });
     }
 
-    if (city == "") {
+    if (city === "") {
         return res.status(400).json({
             message: 'Invalid city'
         });
     }
 
-    if (image == "") {
+    if (image === "") {
         return res.status(400).json({
             message: 'Invalid image'
         });
