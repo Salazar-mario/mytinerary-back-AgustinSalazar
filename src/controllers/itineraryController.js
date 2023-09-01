@@ -1,111 +1,109 @@
-const Itinerary = require('../models/itinerary');
+const mongoose = require('mongoose');
+const City = require('../models/city');
+const Itinerary = require('../models/itinerary')
 
-const getItineraries = async (req, res) => {
+const getItineraries = async (req, res, next) => {
     try {
-        let queries = {};
-        if (req.query.itinerary) {
-            queries.itinerary = new RegExp(`^${req.query.itinerary}`, 'i');
-        }
+        const itineraries = await Itinerary.find().populate({ path: "city", select: "city country" });
 
-        const itineraries = await Itinerary.find(queries);
-
-        if (itineraries.length > 0) {
-            return res.status(200).json({
-                success: true,
-                itineraries
-            });
-        }
-
-        return res.status(404).json({
-            success: false,
-            message: "No matching itineraries found"
-        });
+        res.json({
+            success: true,
+            response: itineraries
+        })
     } catch (error) {
         console.log(error);
-        return res.status(500).json({
-            success: false,
-            message: 'Error getting the itineraries'
-        });
     }
 };
 
-const getItineraryById = async (req, res) => {
+const getItinerary = async (req, res, next) => {
+    const { id } = req.params;
     try {
-        const oneItinerary = await Itinerary.findById(req.params.id);
+        const itinerary = await Itinerary.findById(id).populate({ path: "city", select: "city country" });
 
-        if (oneItinerary) {
-            return res.status(200).json({
-                success: true,
-                itinerary: oneItinerary
-            });
-        }
-
-        return res.status(404).json({
-            success: false,
-            message: 'Itinerary not found'
-        });
+        res.json({
+            success: true,
+            response: itinerary
+        })
     } catch (error) {
         console.log(error);
-        return res.status(500).json({
-            success: false,
-            message: 'Error getting the itinerary'
-        });
+    }
+};
+
+const getItinerariesByCity = async (req, res, next) => {
+    const { cityId } = req.params;
+    try {
+        const itineraries = await Itinerary.find({ city: cityId }).populate({ path: "city", select: "city country" });
+
+        res.json({
+            success: true,
+            response: itineraries
+        })
+    } catch (error) {
+        console.log(error);
     }
 };
 
 const createItinerary = async (req, res) => {
     try {
-        const newItinerary = await Itinerary.create(req.body);
+        const cityId = req.body.cityId; 
+        const city = await City.findById(cityId);
 
-        return res.status(201).json({
-            success: true,
-            message: 'Itinerary created'
-        });
+        if (!city) {
+            return res.status(404).json({ success: false, message: 'City not found' });
+        }
+
+        const itineraryData = {
+            name: req.body.name,
+            city_id: city._id,
+            price: req.body.price,
+            duration: req.body.duration,
+            tags: req.body.tags,
+            image: req.body.image
+        };
+
+        const itinerary = await Itinerary.create(itineraryData);
+
+        res.status(201).json({ success: true, response: itinerary });
     } catch (error) {
         console.log(error);
-        return res.status(500).json({
-            success: false,
-            message: 'Error creating the itinerary'
-        });
+        res.status(500).json({ success: false, message: 'Internal server error' });
     }
 };
+const deleteItinerary = async (req, res, next) => {
+    const { id } = req.params;
+    try {
+        await Itinerary.findByIdAndDelete(id);
 
+        res.json({
+            success: true,
+            response: "Deleted document with id " + id
+        })
+    } catch (error) {
+        console.log(error);
+    }
+};
 const updateItinerary = async (req, res) => {
+    const { id } = req.params;
     try {
-        await Itinerary.updateOne({ _id: req.params.id }, req.body);
-        return res.status(200).json({
-            success: true,
-            message: 'Itinerary updated successfully'
-        });
-    } catch (error) {
-        console.log(error);
-        return res.status(500).json({
-            success: false,
-            message: 'Error trying to update the itinerary'
-        });
-    }
-};
+        const updatedItinerary = await Itinerary.findByIdAndUpdate(id, req.body, { new: true });
 
-const deleteItinerary = async (req, res) => {
-    try {
-        await Itinerary.deleteOne({ _id: req.params.id });
-        return res.status(200).json({
-            success: true,
-            message: 'Itinerary deleted successfully'
-        });
+        if (!updatedItinerary) {
+            return res.status(404).json({ success: false, message: 'Itinerary not found' });
+        }
+
+        res.json({ success: true, response: updatedItinerary });
     } catch (error) {
         console.log(error);
-        return res.status(500).json({
-            success: false,
-            message: 'Error trying to delete the itinerary'
-        });
+        res.status(500).json({ success: false, message: 'Internal server error' });
     }
 };
 
 module.exports = {
     getItineraries,
-    getItineraryById,
+    getItinerary,
+    getItinerariesByCity,
     createItinerary,
     updateItinerary,
     deleteItinerary
 };
+

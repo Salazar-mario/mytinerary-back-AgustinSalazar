@@ -9,5 +9,4 @@ cities.get('/:id', getCity);
 cities.post('/addCities', verifyDataCity,createManyCities);
 cities.patch('/:id', verifyDataCity,updateCity);
 cities.delete('/:id', deleteCity);
-
 module.exports = cities;
