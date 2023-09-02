@@ -1,12 +1,12 @@
 const itineraryDataVerification = (req, res, next) => {
-    const { name, image, price, duration } = req.body;
+    const { name, like, price, duration } = req.body;
 
     if (!name || typeof name !== "string") {
         return res.status(400).json({ message: "Invalid name" });
     }
 
-    if (!image || typeof image !== "string") {
-        return res.status(400).json({ message: "Invalid image" });
+    if (like !== undefined && typeof like !== "string" && typeof like !== "number") {
+        return res.status(400).json({ message: "Invalid like" });
     }
 
     if (!price || typeof price !== "number") {

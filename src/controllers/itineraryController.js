@@ -4,7 +4,7 @@ const Itinerary = require('../models/itinerary')
 
 const getItineraries = async (req, res, next) => {
     try {
-        const itineraries = await Itinerary.find().populate({ path: "city", select: "city country" });
+        const itineraries = await Itinerary.find().populate({ path: "city_id", select: "city country" });
 
         res.json({
             success: true,
@@ -18,34 +18,43 @@ const getItineraries = async (req, res, next) => {
 const getItinerary = async (req, res, next) => {
     const { id } = req.params;
     try {
-        const itinerary = await Itinerary.findById(id).populate({ path: "city", select: "city country" });
+        const itinerary = await Itinerary.findById(id).populate({ path: "city_id", select: "city country" });
+
+        if (!itinerary) {
+            return res.status(404).json({ success: false, message: 'Itinerary not found' });
+        }
 
         res.json({
             success: true,
             response: itinerary
-        })
+        });
     } catch (error) {
         console.log(error);
+        res.status(500).json({ success: false, message: 'Internal server error' });
     }
 };
+
 
 const getItinerariesByCity = async (req, res, next) => {
     const { cityId } = req.params;
+    
     try {
-        const itineraries = await Itinerary.find({ city: cityId }).populate({ path: "city", select: "city country" });
-
+        console.log("cityId:", cityId); 
+        const itineraries = await Itinerary.find({ city_id: cityId }).populate({ path: "city_id", select: "city country" });
+        console.log("Itineraries:", itineraries); 
         res.json({
             success: true,
             response: itineraries
-        })
+        });
     } catch (error) {
         console.log(error);
     }
 };
 
+
 const createItinerary = async (req, res) => {
     try {
-        const cityId = req.body.cityId; 
+        const cityId = req.body.cityId;
         const city = await City.findById(cityId);
 
         if (!city) {
@@ -58,7 +67,7 @@ const createItinerary = async (req, res) => {
             price: req.body.price,
             duration: req.body.duration,
             tags: req.body.tags,
-            image: req.body.image
+            like: req.body.like
         };
 
         const itinerary = await Itinerary.create(itineraryData);
@@ -106,4 +115,3 @@ module.exports = {
     updateItinerary,
     deleteItinerary
 };
-
