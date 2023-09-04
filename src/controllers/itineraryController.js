@@ -50,28 +50,24 @@ const getItinerariesByCity = async (req, res, next) => {
         console.log(error);
     }
 };
-
-
 const createItinerary = async (req, res) => {
     try {
         const cityId = req.body.cityId;
         const city = await City.findById(cityId);
-
         if (!city) {
             return res.status(404).json({ success: false, message: 'City not found' });
         }
-
         const itineraryData = {
             name: req.body.name,
             city_id: city._id,
             price: req.body.price,
             duration: req.body.duration,
             tags: req.body.tags,
-            like: req.body.like
+            like: req.body.like,
+            user: req.body.user,
+            image: req.body.image
         };
-
         const itinerary = await Itinerary.create(itineraryData);
-
         res.status(201).json({ success: true, response: itinerary });
     } catch (error) {
         console.log(error);
