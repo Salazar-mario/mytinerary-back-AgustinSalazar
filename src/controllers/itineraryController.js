@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const City = require('../models/city');
+const city = require('../models/city');
 const Itinerary = require('../models/itinerary')
 
 const getItineraries = async (req, res, next) => {
@@ -53,13 +53,18 @@ const getItinerariesByCity = async (req, res, next) => {
 const createItinerary = async (req, res) => {
     try {
         const cityId = req.body.cityId;
-        const city = await City.findById(cityId);
-        if (!city) {
+        const citydata = await city.findById(cityId);
+
+        if (!citydata) {
             return res.status(404).json({ success: false, message: 'City not found' });
         }
+
+        console.log("City ID:", cityId); 
+        console.log("City:", citydata); 
+
         const itineraryData = {
             name: req.body.name,
-            city_id: city._id,
+            city_id: citydata._id, 
             price: req.body.price,
             duration: req.body.duration,
             tags: req.body.tags,
@@ -67,6 +72,7 @@ const createItinerary = async (req, res) => {
             user: req.body.user,
             image: req.body.image
         };
+        
         const itinerary = await Itinerary.create(itineraryData);
         res.status(201).json({ success: true, response: itinerary });
     } catch (error) {
@@ -74,6 +80,9 @@ const createItinerary = async (req, res) => {
         res.status(500).json({ success: false, message: 'Internal server error' });
     }
 };
+
+
+
 const deleteItinerary = async (req, res, next) => {
     const { id } = req.params;
     try {

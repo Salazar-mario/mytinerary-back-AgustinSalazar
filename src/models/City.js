@@ -26,6 +26,6 @@ const schema = new Schema({
     versionKey: false
 });
 
-const City = model(collection, schema);
+const city = model(collection, schema);
 
-module.exports = City;
+module.exports = city;
