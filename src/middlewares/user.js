@@ -1,4 +1,4 @@
-const User = require('../models/user.js');
+/*const User = require('../models/user.js');
 
 export default async (req, res, next) => {
     try {
@@ -16,4 +16,4 @@ export default async (req, res, next) => {
     } catch (error) {
         return next(error);
     }
-};
+};*/

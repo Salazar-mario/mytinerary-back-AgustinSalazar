@@ -1,12 +1,8 @@
-const { Router } = require("express");
-const register = require("../controllers/auth");
-const validator = require("../middlewares/validator");
-const registerSchema = require("../schemas/register");
-const existsUser = require("../middlewares/user");
-const validPassword = require("../middlewares/password");
+const express = require('express')
+const { register} = require('../controllers/auth');
+const { verifyAuthData } = require('../middlewares/verifications');
+const authRouter = express.Router();
 
-const auth_router = Router();
 
-auth_router.post('/signup', validator(registerSchema), existsUser, validPassword, register);
-
-module.exports = auth_router;
+authRouter.post('/register',verifyAuthData, register)
+module.exports = authRouter;

@@ -1,19 +1,22 @@
 const User = require('../models/user');
 
-export default async (req, res, next) => {
+const register = async (req, res) => {
     try {
-        let one = await User.create(req.body);
-
-        return res.status(201).json({
-            success: true,
-            message: 'User created successfully',
-            user: one 
+        const payload = req.body;
+        const userExists = await User.findOne({ email: payload.email });
+        if (userExists) {
+            return res.status(403).json({ message: "The user already exists" });
+        }
+        const userCreated = await User.create(payload);
+        res.status(200).json({
+            message: "User created successfully",
+            userCreated
         });
-    } catch (error) {
-        return res.status(500).json({
-            success: false,
-            message: 'Error creating user',
-            error: error.message 
-        });
+    } catch (e) {
+        res.status(400).json({ message: e.message });
     }
+};
+
+module.exports = {
+    register
 };
