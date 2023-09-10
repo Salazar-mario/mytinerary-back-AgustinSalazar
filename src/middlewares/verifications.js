@@ -74,13 +74,34 @@ const verifyDataCity = (req, res, next) => {
 
 const verifyAuthData = (req, res, next) => {
     const payload = req.body;
-    const userValidated = userSchema.validate(payload, { allowUnknown: true });
+
+    const UserSchema = joi.object({
+        mail: joi.string().required().min(5).max(30).messages({
+            'string.min': "mail must have at least 3 characters please",
+            'string.max': "mail must have less than 30 characters or be equal to 30 characters please!",
+            'string.empty': "mail can not be empty",
+            'any.required': "mail is required"
+        }),
+        password: joi.string()
+            .required()
+            .min(6)
+            .max(15)
+            .messages({
+                'string.min': "password must have at least 6 characters please",
+                'string.max': "password must have less than 15 characters or be equal to 15 characters please!",
+                'string.empty': "password can not be empty",
+                'any.required': "password is required"
+            }),
+    });
+
+    const userValidated = UserSchema.validate(payload, { allowUnknown: true });
 
     if (userValidated.error) {
         return res.status(400).json({ message: userValidated.error.details.map((err) => err.message) });
     }
     next();
 };
+
 
 module.exports = {
     verifyDataCity,
