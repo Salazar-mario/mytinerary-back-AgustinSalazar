@@ -11,9 +11,7 @@ const register = async (req, res) => {
                 message: "This user already exists"
             });
         }
-
         const newUser = await User.create(userPayload);
-
         res.status(200).json(
             {
                 "message": "user registered",
@@ -34,14 +32,14 @@ const login = async (req, res) => {
             user: {
                 mail: req.user.mail,
                 id: req.user._id,
-                urlimage: req.user.urlimage,
-                firstName: req.user.firstName
+                userProfilePhoto: req.user.photo, 
             }
         });
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
 };
+
 
 const authenticated = async (req, res) => {
     try {
@@ -51,8 +49,7 @@ const authenticated = async (req, res) => {
             user: {
                 mail: req.user.mail,
                 id: req.user._id,
-                urlimage: req.user.urlimage,
-                firstName: req.user.firstName
+                userProfilePhoto: req.user.photo,
             }
         });
     } catch (error) {
