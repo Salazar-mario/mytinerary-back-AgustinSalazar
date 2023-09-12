@@ -11,18 +11,21 @@ const register = async (req, res) => {
                 message: "This user already exists"
             });
         }
+
         const newUser = await User.create(userPayload);
-        res.status(200).json(
-            {
-                "message": "user registered",
-                "user": newUser
-            }
-        );
+        const token = jwt.sign({ mail: newUser.mail }, process.env.SECRET_KEY, { expiresIn: '50m' });
+
+        res.status(200).json({
+            message: "user registered",
+            user: newUser,
+            token: token // Agrega el token en la respuesta
+        });
 
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
 };
+
 
 const login = async (req, res) => {
     try {
@@ -32,14 +35,14 @@ const login = async (req, res) => {
             user: {
                 mail: req.user.mail,
                 id: req.user._id,
-                userProfilePhoto: req.user.photo, 
+                urlimage: req.user.urlimage,
+                firstName: req.user.firstName
             }
         });
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
 };
-
 
 const authenticated = async (req, res) => {
     try {
@@ -49,7 +52,8 @@ const authenticated = async (req, res) => {
             user: {
                 mail: req.user.mail,
                 id: req.user._id,
-                userProfilePhoto: req.user.photo,
+                urlimage: req.user.urlimage,
+                firstName: req.user.firstName
             }
         });
     } catch (error) {

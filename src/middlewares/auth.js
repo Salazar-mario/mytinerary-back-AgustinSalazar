@@ -41,12 +41,13 @@ const verifyUserExists = async (req, res, next) => {
 
     if (userFounded) {
         req.user = userFounded;
+        console.log("Usuario encontrado:", userFounded);
         next();
     } else {
+        console.log("Usuario no encontrado");
         res.status(400).json({ message: "User not found" });
     }
 };
-
 const generateToken = (req, res, next) => {
     try {
         let secretKey = process.env.SECRET_KEY;
@@ -61,7 +62,7 @@ const generateToken = (req, res, next) => {
 const passportVerificator = passport.use(
     new Strategy({
         jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-        secretOrKey: "Mindhub2023",
+        secretOrKey: process.env.SECRET_KEY,
     }, async (payload, done) => {
         try {
             let userFounded = await User.findOne({ mail: payload.mail });
