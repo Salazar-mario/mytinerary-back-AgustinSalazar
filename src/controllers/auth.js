@@ -18,7 +18,7 @@ const register = async (req, res) => {
         res.status(200).json({
             message: "user registered",
             user: newUser,
-            token: token // Agrega el token en la respuesta
+            token: token 
         });
 
     } catch (error) {

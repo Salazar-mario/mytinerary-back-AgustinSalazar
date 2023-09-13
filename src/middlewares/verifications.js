@@ -8,19 +8,19 @@ let userSchema = joi.object({
         'any.required': "name is required"
 
     }),
-    mail: joi.string().required().min(5).max(30).messages({
+    mail: joi.string().required().min(5).max(50).messages({
         'string.min': "mail must have at least 3 characters please",
-        'string.max': "mail must have less less than 20 characters or be equal to 20 characters please!",
+        'string.max': "mail must have less less than 50 characters or be equal to 50 characters please!",
         'string.empty': "mail can not be empty",
         'any.required': "mail is required"
     }),
     password: joi.string()
         .required()
         .min(6)
-        .max(15)
+        .max(50)
         .messages({
             'string.min': "password must have at least 6 characters please",
-            'string.max': "password must have less less than 20 characters or be equal to 20 characters please!",
+            'string.max': "password must have less less than 50 characters or be equal to 50 characters please!",
             'string.empty': "password can not be empty",
             'any.required': "password is required"
         }),
@@ -76,19 +76,19 @@ const verifyAuthData = (req, res, next) => {
     const payload = req.body;
 
     const UserSchema = joi.object({
-        mail: joi.string().required().min(5).max(30).messages({
+        mail: joi.string().required().min(5).max(50).messages({
             'string.min': "mail must have at least 3 characters please",
-            'string.max': "mail must have less than 30 characters or be equal to 30 characters please!",
+            'string.max': "mail must have less than 50 characters or be equal to 50 characters please!",
             'string.empty': "mail can not be empty",
             'any.required': "mail is required"
         }),
         password: joi.string()
             .required()
             .min(6)
-            .max(15)
+            .max(30)
             .messages({
                 'string.min': "password must have at least 6 characters please",
-                'string.max': "password must have less than 15 characters or be equal to 15 characters please!",
+                'string.max': "password must have less than 30 characters or be equal to 30 characters please!",
                 'string.empty': "password can not be empty",
                 'any.required': "password is required"
             }),
