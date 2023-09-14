@@ -18,7 +18,7 @@ const hashPassword = (req, res, next) => {
 const verifyPassword = (req, res, next) => {
     const passPlain = req.body.password;
     const hashPassword = req.user.password;
-    
+
     console.log("Contraseña proporcionada:", passPlain);
     console.log("Contraseña almacenada en la base de datos:", hashPassword);
 
