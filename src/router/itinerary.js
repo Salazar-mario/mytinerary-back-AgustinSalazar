@@ -2,7 +2,6 @@ const express = require('express');
 const Itinerary = express.Router();
 const itinerariesController = require('../controllers/itineraryController');
 const { itineraryDataVerification } = require('../middlewares/itineVerify');
-
 const {getItineraries, getItinerary, getItinerariesByCity, createItinerary, updateItinerary, deleteItinerary} = itinerariesController;
 const passport = require('passport');
 const { passportVerificator } = require('../middlewares/auth');
